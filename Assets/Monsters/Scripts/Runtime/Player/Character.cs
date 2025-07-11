@@ -8,21 +8,26 @@ namespace Assets.Monsters.Scripts.Runtime.Player
     {
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private Transform _transform;
+        [SerializeField] private CollisonScript _horizontalCollison;
         [SerializeField] private float _moveSpeed = 5f;
         [SerializeField] private float _runSpeedMultiplier = 1.5f;
         [SerializeField] private float _jumpForce = 20f;
 
+        private Vector2 _movement;
+
         private float _horizontalInput;
         private float _jumpInput;
 
-        private bool _isGrounded = true;
         private bool _isLeft = false;
         private bool _isRun = false;
+        private bool _isGround = true;
 
         private void Update()
         {
             GetInput();
             PlayAnimation();
+
+            _isGround = Physics2D.Raycast(_transform.localPosition, Vector2.down, 1.5f, LayerMask.GetMask("Ground"));        
         }
 
         private void FixedUpdate()
@@ -31,12 +36,10 @@ namespace Assets.Monsters.Scripts.Runtime.Player
             Jump();
         }
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        private void OnDrawGizmos()
         {
-            if (collision.gameObject.CompareTag("Ground"))
-            {
-                _isGrounded = true;
-            }
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(_transform.localPosition, Vector3.down * 1.5f);
         }
 
         private void GetInput()
@@ -49,15 +52,19 @@ namespace Assets.Monsters.Scripts.Runtime.Player
 
         private void Move()
         {
-            Vector2 movement = new Vector2(_horizontalInput * _moveSpeed, _rb.linearVelocityY);
+            if (!_horizontalCollison.IsCollission)
+                _movement = new Vector2(_horizontalInput * _moveSpeed, _rb.linearVelocityY);
+            else
+                _movement = new Vector2(0, _rb.linearVelocityY);
+
             if (_isRun)
-                movement.x *= _runSpeedMultiplier;
+                _movement.x *= _runSpeedMultiplier;
 
-            _rb.linearVelocity = movement;
+            _rb.linearVelocity = _movement;
 
-            if(_horizontalInput < 0)
+            if (_horizontalInput < 0)
                 _isLeft = true;
-            else if(_horizontalInput > 0)
+            else if (_horizontalInput > 0)
                 _isLeft = false;
 
             _transform.localScale = new Vector3(_isLeft ? 1 : -1, 1, 1);
@@ -65,10 +72,10 @@ namespace Assets.Monsters.Scripts.Runtime.Player
 
         private void Jump()
         {
-            if (_isGrounded && _jumpInput > 0)
+            if (_isGround && _jumpInput > 0)
             {
                 _rb.linearVelocityY = _jumpForce;
-                _isGrounded = false;
+                _isGround = false;
             }
         }
     }

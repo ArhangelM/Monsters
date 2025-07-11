@@ -39,7 +39,7 @@ namespace Assets.Monsters.Scripts.Runtime.Light
         
         private void ChangedDayTime()
         {
-            _lightSource.color = Color.LerpUnclamped(_lightSource.color, 
+            _lightSource.color = Color.Lerp(_lightSource.color, 
                 _isDayTime ? _nightColor : _dayColor, 
                 1f / (_isDayTime ? _dayDuration : _nightDuration));
 
