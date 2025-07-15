@@ -1,5 +1,6 @@
 ﻿using Assets.Monsters.Scripts.Core.Constants;
 using Assets.Monsters.Scripts.Core.Items;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,15 +11,28 @@ namespace Assets.Monsters.Scripts.Runtime.UI.Interface
     {
         [SerializeField] private Image _image;
         [SerializeField] private Image _rarityImage;
+        [SerializeField] private Button _takeButton;
         [SerializeField] private TextMeshProUGUI _count;
         [SerializeField] private GameObject _contentCell;
         [SerializeField] private GameObject _emptyCell;
 
-        private ItemData _itemData;
+        public ItemData ItemData { get; private set; }
+
+        public event Action<ItemView> OnTakeItem;
+
+        private void OnEnable()
+        {
+            _takeButton.onClick.AddListener(Take);
+        }
+
+        private void OnDisable()
+        {
+            _takeButton?.onClick.RemoveListener(Take);
+        }
 
         public void Init()
-        {             
-            _itemData = null;
+        {
+            ItemData = null;
             _contentCell.SetActive(false);
             _emptyCell.SetActive(true);
         }
@@ -28,18 +42,23 @@ namespace Assets.Monsters.Scripts.Runtime.UI.Interface
             _contentCell.SetActive(true);
             _emptyCell.SetActive(false);
 
-            _itemData = itemData;
+            ItemData = itemData;
 
-            if (_itemData.Data != null)
+            if (ItemData.Data != null)
             {
-                _count.text = _itemData.Count.ToString();
-                _image.sprite = _itemData.Data.Image;
-                _rarityImage.color = DictionaryHelper.ColorByRarity[_itemData.Data.Rarity];
+                _count.text = ItemData.Count.ToString();
+                _image.sprite = ItemData.Data.Image;
+                _rarityImage.color = DictionaryHelper.ColorByRarity[ItemData.Data.Rarity];
             }
             else
             {
                 Debug.LogWarning($"Item data is null.");
             }
+        }
+
+        private void Take()
+        {
+            OnTakeItem?.Invoke(this);
         }
     }
 }

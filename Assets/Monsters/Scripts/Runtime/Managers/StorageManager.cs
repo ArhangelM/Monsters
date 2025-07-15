@@ -2,6 +2,7 @@
 using Assets.Monsters.Scripts.Core.Items;
 using Assets.Monsters.Scripts.ScriptableObjects.Storage.Items;
 using Assets.Monsters.Scripts.ScriptableObjects.Storage.Items.Boxes;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ namespace Assets.Monsters.Scripts.Runtime.Managers
 {
     internal class StorageManager : MonoBehaviour
     {
+        [SerializeField] StorageItemsConfiguration _allItemsStorage;
+
         [SerializeField] StorageItemsConfiguration _commonChestStorage;
 
         private static StorageManager _instance;
@@ -34,13 +37,21 @@ namespace Assets.Monsters.Scripts.Runtime.Managers
             {
                 var item = currentStorage.Items.ElementAt(Random.Range(0, currentStorage.Items.Count));
                 var itemData = new ItemData
-                {
-                    Count = Random.Range(item.Value.Min, item.Value.Max + 1),
-                    Data = item.Key.Clone() as ItemConfiguration
-                };
+                (
+                    Random.Range(item.Value.Min, item.Value.Max + 1),
+                    item.Key.Clone() as ItemConfiguration
+                );
 
                 items[i] = itemData;
-            }                   
+            }
+
+            return items;
+        }
+
+        public List<ItemData> GetAllItems(List<ItemData> items)
+        {
+            for (int i = 0; i < items.Count; i++)
+                items[i].SetData(_allItemsStorage.Items.FirstOrDefault(s => s.Key.ItemName == items[i].NameKey).Key);
 
             return items;
         }

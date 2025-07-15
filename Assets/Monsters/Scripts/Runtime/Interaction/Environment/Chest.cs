@@ -3,6 +3,8 @@ using Assets.Monsters.Scripts.Core.Enums;
 using Assets.Monsters.Scripts.Core.Items;
 using Assets.Monsters.Scripts.Runtime.Interaction.Common;
 using Assets.Monsters.Scripts.Runtime.Managers;
+using System.Collections.Generic;
+using System.Linq;
 using Tools.SignalBus;
 using UnityEngine;
 
@@ -14,7 +16,7 @@ namespace Assets.Monsters.Scripts.Runtime.Interaction.Environment
         [SerializeField] private Animator _animator;
         [SerializeField] private ChestType _chestType;
 
-        private ItemData[] _items;
+        private List<ItemData> _items = new List<ItemData>();
         private bool _isOpened = false;
 
         public void Init(ChestType chestType)
@@ -28,15 +30,26 @@ namespace Assets.Monsters.Scripts.Runtime.Interaction.Environment
             {
                 if (!_isOpened)
                 {
-                    _items = StorageManager.Instance.GetItemsInChest(_chestType);
+                    _items = StorageManager.Instance.GetItemsInChest(_chestType).ToList();
                     _animator.SetBool("Open", true);
                     _isOpened = true;
                 }
                 else
                     Debug.Log("Chest is already opened.");
 
-                SignalBus.Instance.Invoke(new ShowChestItemsSignal(_items));
+                SignalBus.Instance.Invoke(new ShowChestItemsSignal(_items.ToArray(), this));
             }
+        }
+
+        public void TakeItem(ItemData item)
+        {
+            _items.RemoveAll(s => s.Equals(item));
+        }
+
+        public void TakeAllItems(IEnumerable<ItemData> items)
+        {
+            foreach (var item in items) 
+                TakeItem(item);
         }
     }
 }

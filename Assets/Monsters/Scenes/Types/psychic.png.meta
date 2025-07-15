@@ -186,7 +186,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      psychic_0: 5126300740797948313
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
