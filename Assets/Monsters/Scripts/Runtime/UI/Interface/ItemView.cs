@@ -14,7 +14,7 @@ namespace Assets.Monsters.Scripts.Runtime.UI.Interface
         [SerializeField] private Button _takeButton;
         [SerializeField] private TextMeshProUGUI _count;
         [SerializeField] private GameObject _contentCell;
-        [SerializeField] private GameObject _emptyCell;
+        //[SerializeField] private GameObject _emptyCell;
 
         public ItemData ItemData { get; private set; }
 
@@ -34,13 +34,13 @@ namespace Assets.Monsters.Scripts.Runtime.UI.Interface
         {
             ItemData = null;
             _contentCell.SetActive(false);
-            _emptyCell.SetActive(true);
+            //_emptyCell.SetActive(true);
         }
 
         public void Init(ItemData itemData)
         {
             _contentCell.SetActive(true);
-            _emptyCell.SetActive(false);
+            //_emptyCell.SetActive(false);
 
             ItemData = itemData;
 
