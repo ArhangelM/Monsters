@@ -1,7 +1,8 @@
 ﻿using Assets.Monsters.Scripts.Core.Items;
 using System.Collections.Generic;
 using System.Linq;
-using Tools.Extensions;
+using ArhTools.Extensions;
+using Assets.Monsters.Scripts.Core.Monsters;
 
 namespace Assets.Monsters.Scripts.Core
 {
@@ -20,7 +21,8 @@ namespace Assets.Monsters.Scripts.Core
             }
         }
 
-        public List<ItemData> Items { get; set; } = new List<ItemData>();
+        public List<ItemData> Items { get; set; } = new();
+        public List<MonsterData> Monsters { get; set; } = new();
 
 
         private Player()
@@ -46,5 +48,7 @@ namespace Assets.Monsters.Scripts.Core
             foreach (ItemData itemItem in item) 
                 AddItem(itemItem);
         }
+
+        public List<MonsterData> GetTeamMonsters() => Monsters.Where(s => s.IsTeam).ToList();
     }
 }

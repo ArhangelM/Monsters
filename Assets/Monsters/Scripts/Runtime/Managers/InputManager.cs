@@ -1,5 +1,5 @@
 ﻿using Assets.Monsters.Scripts.Common.Signals.InputManagerSignals;
-using Tools.SignalBus;
+using ArhTools.SignalBus;
 using UnityEngine;
 
 namespace Assets.Monsters.Scripts.Runtime.Managers
@@ -10,6 +10,8 @@ namespace Assets.Monsters.Scripts.Runtime.Managers
         {
             if (Input.GetKeyDown(KeyCode.I))
                SignalBus.Instance.Invoke(new OpenInventorySignal());
+            if (Input.GetKeyDown(KeyCode.P))
+                SignalBus.Instance.Invoke(new StartBattleSignal());
         }
     }
 }

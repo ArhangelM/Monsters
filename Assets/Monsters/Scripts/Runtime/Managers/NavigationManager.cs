@@ -1,6 +1,6 @@
 ﻿using Assets.Monsters.Scripts.Common.Signals;
 using Assets.Monsters.Scripts.Common.Signals.InputManagerSignals;
-using Tools.SignalBus;
+using ArhTools.SignalBus;
 using UnityEngine;
 
 namespace Assets.Monsters.Scripts.Runtime.Managers

@@ -20,8 +20,6 @@ namespace Assets.Monsters.Scripts.Runtime.Player
             }
             else
                 IsCollission = true;
-
-            Debug.Log($"Collision Entered: {collision.gameObject.name} with mask {_useMask}");
         }
 
         private void OnCollisionExit2D(Collision2D collision)
@@ -35,8 +33,6 @@ namespace Assets.Monsters.Scripts.Runtime.Player
             }
             else
                 IsCollission = false;
-
-            Debug.Log($"Collision Exit: {collision.gameObject.name} with mask {_useMask}");
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Assets.Monsters.Scripts.ScriptableObjects.Storage.Items;
+﻿using ArhTools.Extensions;
+using Assets.Monsters.Scripts.ScriptableObjects.Storage.Items;
+using Newtonsoft.Json;
 
 namespace Assets.Monsters.Scripts.Core.Items
 {
@@ -6,6 +8,8 @@ namespace Assets.Monsters.Scripts.Core.Items
     {
         public string NameKey { get; set; }
         public int Count { get; set; }
+
+        [JsonIgnore]
         public ItemConfiguration Data { get; private set; }
 
         public ItemData()

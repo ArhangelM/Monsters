@@ -1,5 +1,5 @@
 ﻿using Assets.Monsters.Scripts.Runtime.Interaction.Common;
-using Tools.Extensions;
+using ArhTools.Extensions;
 using UnityEngine;
 
 namespace Assets.Monsters.Scripts.Runtime.Player

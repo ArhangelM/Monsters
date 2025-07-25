@@ -1,15 +1,15 @@
 ﻿using Assets.Monsters.Scripts.Common.Helpers;
 using Assets.Monsters.Scripts.Common.Signals;
-using Tools.SignalBus;
+using ArhTools.SignalBus;
 using UnityEngine;
 
 namespace Assets.Monsters.Scripts.Runtime.Managers
 {
     internal class GameManager : MonoBehaviour
     {
-        private void Awake()
+        private async void Awake()
         {
-            FileHelper.LoadGameData();
+            await FileHelper.LoadGameData();
         }
 
         private void OnEnable()
@@ -27,14 +27,14 @@ namespace Assets.Monsters.Scripts.Runtime.Managers
             //FileHelper.SaveGameData();
         }
 
-        private void OnApplicationQuit()
+        private async void OnApplicationQuit()
         {
-            FileHelper.SaveGameData();
+            //await FileHelper.SaveGameData();
         }
 
-        private void OnSaveGame(SaveGameDataSignal signal)
+        private async void OnSaveGame(SaveGameDataSignal signal)
         {
-            FileHelper.SaveGameData();
+            //await FileHelper.SaveGameData();
         }
 
         private void SubscribeEvents()

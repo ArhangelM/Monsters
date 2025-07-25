@@ -31,6 +31,7 @@ namespace Assets.Monsters.Scripts.Common
             _timer.AutoReset = true;
             _timer.Enabled = true;
             _timer.Elapsed += TimerElapsed;
+            _timer.Stop();
         }
     }
 }
