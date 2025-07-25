@@ -1,11 +1,14 @@
 ﻿using Assets.Monsters.Scripts.Common.Signals;
 using Assets.Monsters.Scripts.Common.Signals.InputManagerSignals;
 using Assets.Monsters.Scripts.Runtime.UI.Interface;
-using Tools.Extensions;
-using Tools.SignalBus;
+using ArhTools.Extensions;
+using ArhTools.SignalBus;
 using UnityEngine;
 using UnityEngine.UI;
 using Core = Assets.Monsters.Scripts.Core;
+using Assets.Monsters.Scripts.Core.Battlefield;
+using Assets.Monsters.Scripts.Runtime.Managers;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Monsters.Scripts.Runtime.Generators.UI
 {
@@ -30,6 +33,7 @@ namespace Assets.Monsters.Scripts.Runtime.Generators.UI
 
         private void OnShowItems(OpenInventorySignal signal)
         {
+            AddedMonster();
             ResetItems();
             
             for (int i = 0; i < Core.Player.Instance.Items.Count; i++)
@@ -61,13 +65,31 @@ namespace Assets.Monsters.Scripts.Runtime.Generators.UI
         private void SubscribeEvents()
         {
             SignalBus.Instance.Subscribe<OpenInventorySignal>(OnShowItems);
+            SignalBus.Instance.Subscribe<StartBattleSignal>(ShowBattle);
             _closeButton.onClick.AddListener(OnCloseButtonClick);
         }
 
         private void UnsubscribeEvents()
         {
             SignalBus.Instance.Unsubscribe<OpenInventorySignal>(OnShowItems);
+            SignalBus.Instance.Unsubscribe<StartBattleSignal>(ShowBattle);
             _closeButton.onClick.RemoveListener(OnCloseButtonClick);
+        }
+
+        //////////////////////////////////////test
+        private MonsterHelper monsterHelper = new MonsterHelper();
+        private void AddedMonster()
+        {
+            var monsterConfig = StorageManager.Instance.GetMonsterConfiguration("Миша");
+            var monster = monsterHelper.GenerateMonsterData(monsterConfig, StorageManager.Instance.GetAttackConfigurations(monsterConfig.BaseElement));
+            Core.Player.Instance.Monsters.Add(monster);
+        }
+
+        private void ShowBattle(StartBattleSignal signal)
+        {
+            var monsterConfig = StorageManager.Instance.GetMonsterConfiguration("Миша");
+            MonsterInBattleCrossScene.Monster = monsterHelper.GenerateMonsterData(monsterConfig, StorageManager.Instance.GetAttackConfigurations(monsterConfig.BaseElement));
+            SceneManager.LoadScene("Battle");
         }
     }
 }

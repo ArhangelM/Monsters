@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2c9f7d5162fe8a43a9f3693b55424b4, type: 3}
+  m_Name: FireStorage
+  m_EditorClassIdentifier: 
+  <Attacks>k__BackingField:
+  - {fileID: 11400000, guid: 6118886498527054fa17b6854f2c6412, type: 2}
+  - {fileID: 11400000, guid: ed9541916a2a6b24fbb193a1c69d8721, type: 2}
+  - {fileID: 11400000, guid: 8822e388b2747304dbb5f323e4325aca, type: 2}

@@ -5,7 +5,7 @@ using Assets.Monsters.Scripts.Runtime.Interaction.Common;
 using Assets.Monsters.Scripts.Runtime.Managers;
 using System.Collections.Generic;
 using System.Linq;
-using Tools.SignalBus;
+using ArhTools.SignalBus;
 using UnityEngine;
 
 namespace Assets.Monsters.Scripts.Runtime.Interaction.Environment
